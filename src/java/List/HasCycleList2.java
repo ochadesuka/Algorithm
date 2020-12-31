@@ -1,22 +1,23 @@
 package List;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-//leetcode 141
-public class HasCycleList {
+public class HasCycleList2 {
     public static boolean hasCycle(ListNode head) {
-        Set<ListNode> set = new HashSet<>();
-        while (head != null) {
-            if (set.contains(head)) {
-                return true;
-            }
-            set.add(head);
-            head = head.next;
+        if (head == null || head.next == null || head.next.next == null) {
+            return false;
         }
-        return false;
+        ListNode fast = head.next.next;
+        ListNode slow = head.next;
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -28,6 +29,6 @@ public class HasCycleList {
         ListNode head4 = new ListNode(4);
         head3.next = head4;
         head4.next = head2;
-        System.out.println(HasCycleList.hasCycle(head));
+        System.out.println(HasCycleList2.hasCycle(head));
     }
 }
